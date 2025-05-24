@@ -1,23 +1,13 @@
-/* style.css */
-
-/* Make heading pop more */
-h1 {
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+body {
+  background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Smooth transitions for buttons */
-button, a {
-  transition: all 0.3s ease;
+.card {
+  background-color: #ffffff;
+  border: none;
 }
 
-/* Rounded input borders with shadow */
-input {
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* Custom hover effect for weather card */
-#weatherResult div:hover {
-  transform: scale(1.02);
-  transition: transform 0.2s;
+h2 {
+  color: #00796b;
 }
