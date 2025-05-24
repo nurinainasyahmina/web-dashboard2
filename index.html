@@ -54,16 +54,6 @@
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
     }
 
-    .card h5 {
-      font-weight: 600;
-      margin-top: 10px;
-    }
-
-    .card p {
-      font-size: 0.95rem;
-      color: #666;
-    }
-
     .dashboard-icon {
       width: 80px;
       height: 80px;
@@ -72,9 +62,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 36px;
       margin: 0 auto 15px;
-      color: white;
+      overflow: hidden;
+    }
+
+    .dashboard-icon img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
     }
 
     .btn-outline-pink {
@@ -121,7 +116,9 @@
             <!-- Weather Dashboard -->
             <div class="carousel-item active">
               <div class="card p-4 text-center mx-auto" style="max-width: 600px;">
-                <div class="dashboard-icon">🌤️</div>
+                <div class="dashboard-icon">
+                  <img src="images/weather.png" alt="Weather Icon" />
+                </div>
                 <h5>Weather Dashboard</h5>
                 <p>Live weather monitoring for Malaysian cities with temperature, humidity, and real-time charts.</p>
                 <a href="weather.html" class="btn btn-outline-pink">Go to Weather</a>
@@ -131,7 +128,9 @@
             <!-- COVID Dashboard -->
             <div class="carousel-item">
               <div class="card p-4 text-center mx-auto" style="max-width: 600px;">
-                <div class="dashboard-icon">🏥</div>
+                <div class="dashboard-icon">
+                  <img src="images/covid.png" alt="COVID Icon" />
+                </div>
                 <h5>COVID-19 Dashboard</h5>
                 <p>Track the latest COVID-19 statistics and cases globally with live country-by-country charts.</p>
                 <a href="covid.html" class="btn btn-outline-pink">Go to COVID-19</a>
@@ -150,7 +149,6 @@
           </button>
         </div>
         <!-- Carousel End -->
-
       </div>
     </div>
   </div>
