@@ -9,7 +9,7 @@ const countrySelect = document.getElementById('countrySelect');
 const chartCtx = document.getElementById('covidChart').getContext('2d');
 let covidChart;
 
-// Populate dropdown
+// Masukkan senarai negara ke dalam dropdown
 countries.forEach(country => {
   const option = document.createElement('option');
   option.value = country;
@@ -31,27 +31,62 @@ countrySelect.addEventListener('change', async () => {
         label: `${data.country} COVID-19 Stats`,
         data: [data.cases, data.recovered, data.deaths],
         backgroundColor: [
-          'rgba(54, 162, 235, 0.7)',
-          'rgba(75, 192, 192, 0.7)',
-          'rgba(255, 99, 132, 0.7)'
+          'rgba(255, 99, 99, 0.8)',   // Confirmed - Light red
+          'rgba(255, 160, 160, 0.8)', // Recovered - Softer red
+          'rgba(180, 0, 0, 0.8)'      // Deaths - Deep red
         ],
         borderColor: [
-          'rgba(54, 162, 235, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(255, 99, 132, 1)'
+          'rgba(255, 0, 0, 1)',       // Confirmed border
+          'rgba(255, 80, 80, 1)',     // Recovered border
+          'rgba(120, 0, 0, 1)'        // Deaths border
         ],
-        borderWidth: 1
+        borderWidth: 2
       }]
     };
 
-    if (covidChart) covidChart.destroy(); // Replace chart
+    if (covidChart) covidChart.destroy(); // Hapus carta lama
     covidChart = new Chart(chartCtx, {
       type: 'bar',
       data: chartData,
       options: {
         responsive: true,
+        plugins: {
+          legend: {
+            labels: {
+              color: '#b30000', // Warna label legend merah
+              font: {
+                weight: 'bold'
+              }
+            }
+          },
+          title: {
+            display: true,
+            text: `COVID-19 Stats for ${data.country}`,
+            color: '#b30000',
+            font: {
+              size: 16,
+              weight: 'bold'
+            }
+          }
+        },
         scales: {
-          y: { beginAtZero: true }
+          y: {
+            beginAtZero: true,
+            ticks: {
+              color: '#b30000'
+            },
+            grid: {
+              color: '#ffcccc'
+            }
+          },
+          x: {
+            ticks: {
+              color: '#b30000'
+            },
+            grid: {
+              color: '#ffcccc'
+            }
+          }
         }
       }
     });
