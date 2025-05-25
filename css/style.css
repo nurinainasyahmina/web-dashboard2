@@ -1,60 +1,13 @@
-/* Latar belakang merah putih (tema bahaya COVID-19) */
 body {
-  background: linear-gradient(to bottom right, #ffcccc, #ffe6e6); /* merah ke putih */
+  background: linear-gradient(to right, #e0f7fa, #f1f8e9);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #8b0000; /* merah gelap */
-  margin: 0;
-  padding: 0;
 }
 
-/* Kad utama (container) */
-.container {
-  background-color: #fff5f5; /* merah pucat */
-  padding: 2rem;
-  margin-top: 3rem;
-  border-radius: 20px;
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+.card {
+  background-color: #ffffff;
+  border: none;
 }
 
-/* Tajuk utama */
 h2 {
-  color: #cc0000; /* merah terang */
-  font-weight: bold;
-}
-
-/* Sub-teks */
-p {
-  color: #990000; /* merah pekat */
-}
-
-/* Dropdown pilihan negara */
-select.form-select {
-  border: 2px solid red;
-  box-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
-  transition: box-shadow 0.3s ease;
-}
-
-select.form-select:focus {
-  outline: none;
-  box-shadow: 0 0 12px rgba(255, 0, 0, 0.6);
-}
-
-/* Carta kanvas */
-canvas {
-  background-color: #ffe6e6; /* latar carta merah lembut */
-  border: 2px solid #ff9999;
-  border-radius: 10px;
-  padding: 10px;
-  margin-top: 1rem;
-}
-
-/* Responsive tweak (optional) */
-@media (max-width: 768px) {
-  .container {
-    padding: 1rem;
-  }
-
-  select.form-select {
-    width: 100% !important;
-  }
+  color: #00796b;
 }
