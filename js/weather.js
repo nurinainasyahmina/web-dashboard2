@@ -6,7 +6,6 @@ const cities = [
   { name: "Kuching", state: "Sarawak", lat: 1.5533, lon: 110.3592 },
   { name: "Ipoh", state: "Perak", lat: 4.5975, lon: 101.0901 },
   { name: "Shah Alam", state: "Selangor", lat: 3.0738, lon: 101.5183 },
-  { name: "Melaka", state: "Melaka", lat: 2.1896, lon: 102.2501 },
   { name: "Seremban", state: "Negeri Sembilan", lat: 2.7297, lon: 101.9381 },
   { name: "Alor Setar", state: "Kedah", lat: 6.121, lon: 100.3678 }
 ];
