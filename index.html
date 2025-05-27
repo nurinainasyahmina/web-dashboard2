@@ -11,24 +11,51 @@
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background-color: #fff5f8;
+      overflow-x: hidden;
     }
 
     .sidebar {
       width: 250px;
       background-color: #fce4ec;
       color: #000;
-      padding: 60px 20px 30px;
       height: 100vh;
       position: fixed;
       top: 0;
       left: 0;
-      overflow-y: auto;
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      overflow-y: hidden;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar.collapsed {
+      width: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .profile-info {
+      text-align: center;
+      padding: 20px;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    .sidebar.collapsed .profile-info {
+      opacity: 0;
     }
 
     .main-content {
       margin-left: 250px;
       padding: 40px;
+      transition: margin-left 0.3s ease;
+    }
+
+    .main-content.collapsed {
+      margin-left: 0;
     }
 
     .toggle-btn {
@@ -41,6 +68,11 @@
       padding: 10px 14px;
       border-radius: 8px;
       z-index: 1101;
+      transition: left 0.3s ease;
+    }
+
+    .main-content.collapsed + .toggle-btn {
+      left: 20px;
     }
 
     .dashboard-title {
@@ -49,39 +81,29 @@
       font-weight: 600;
     }
 
-    .info-box {
-      background-color: #ffe0ec;
-      padding: 30px;
-      border-radius: 20px;
-      max-width: 600px;
-      margin: 30px auto;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    }
-
-    .info-box h2 {
-      font-weight: bold;
-      color: #d63384;
-    }
-
-    .info-box p {
-      font-size: 1.1rem;
-      margin-bottom: 10px;
-      color: #333;
-    }
-
-    .carousel-inner .card {
+    .card {
       border: none;
-      border-radius: 20px;
+      border-radius: 30px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
       background-color: #fff0f5;
-      padding: 30px;
-      max-width: 600px;
-      margin: 0 auto;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
     }
 
     .dashboard-icon {
-      font-size: 50px;
-      margin-bottom: 20px;
-      color: #d63384;
+      width: 70px;
+      height: 70px;
+      background-color: #f8b6c2;
+      color: white;
+      font-size: 32px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 20px;
     }
 
     .btn-outline-pink {
@@ -97,20 +119,19 @@
       color: white;
     }
 
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      background-color: #d63384;
+      border-radius: 50%;
+    }
+
     @media (max-width: 768px) {
       .main-content {
         margin-left: 0;
-        padding: 20px;
-      }
-
-      .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
       }
 
       .toggle-btn {
-        display: none;
+        left: 20px;
       }
     }
   </style>
@@ -118,54 +139,46 @@
 <body>
 
 <!-- Sidebar -->
-<div class="sidebar">
-  <h4>My Dashboard</h4>
-  <hr>
-  <p><a href="weather.html" class="text-dark text-decoration-none">Weather Dashboard</a></p>
-  <p><a href="covid.html" class="text-dark text-decoration-none">COVID-19 Dashboard</a></p>
+<div id="sidebar" class="sidebar">
+  <div class="profile-info">
+    <h4 class="fw-bold">Nurin Aina Syahmina</h4>
+    <p>ID: BTCL22073192</p>
+    <p>Bachelor of Computer Science (Internet Computing)</p>
+    <p>Email: nurinsyahmina66@gmail.com</p>
+    <p>Phone: 018-9892 678</p>
+  </div>
 </div>
 
 <!-- Toggle Sidebar Button -->
-<button class="toggle-btn" onclick="toggleSidebar()">
+<button id="toggleBtn" class="toggle-btn" onclick="toggleSidebar()">
   <i class="fas fa-bars"></i>
 </button>
 
 <!-- Main Content -->
-<div class="main-content text-center">
-
-  <!-- Info Box in Center -->
-  <div class="info-box">
-    <h2>Nurin Aina Syahmina</h2>
-    <p><strong>ID:</strong> BTCL22073192</p>
-    <p><strong>Programme:</strong> Bachelor of Computer Science (Internet Computing)</p>
-    <p><strong>Email:</strong> nurinsyahmina66@gmail.com</p>
-    <p><strong>Phone:</strong> 018-9892 678</p>
-  </div>
-
-  <!-- Dashboard Title -->
-  <h1 class="dashboard-title mb-4">Dashboard Project</h1>
+<div id="main" class="main-content text-center">
+  <h1 class="dashboard-title mb-3">Dashboard Project</h1>
   <p class="mb-5">Welcome to my Dashboard Project 💖 — featuring real-time data dashboards with API integration, CI/CD, and interactive charts.</p>
 
-  <!-- Carousel -->
+  <!-- Carousel Start -->
   <div id="dashboardCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
 
       <!-- Weather Dashboard -->
       <div class="carousel-item active">
-        <div class="card">
+        <div class="card p-4 text-center mx-auto" style="max-width: 600px;">
           <div class="dashboard-icon">🌤️</div>
           <h5>Weather Dashboard</h5>
-          <p>Live weather for Malaysian cities with temperature, humidity & forecast.</p>
+          <p>Live weather monitoring for Malaysian cities with temperature, humidity, and real-time charts.</p>
           <a href="weather.html" class="btn btn-outline-pink">Go to Weather</a>
         </div>
       </div>
 
       <!-- COVID Dashboard -->
       <div class="carousel-item">
-        <div class="card">
+        <div class="card p-4 text-center mx-auto" style="max-width: 600px;">
           <div class="dashboard-icon">🦠</div>
           <h5>COVID-19 Dashboard</h5>
-          <p>Track global COVID-19 stats with country-by-country live updates.</p>
+          <p>Track the latest COVID-19 statistics and cases globally with live country-by-country charts.</p>
           <a href="covid.html" class="btn btn-outline-pink">Go to COVID-19</a>
         </div>
       </div>
@@ -173,24 +186,27 @@
 
     <!-- Carousel Controls -->
     <button class="carousel-control-prev" type="button" data-bs-target="#dashboardCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon p-3 bg-pink rounded-circle" aria-hidden="true"></span>
+      <span class="carousel-control-prev-icon p-3" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#dashboardCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon p-3 bg-pink rounded-circle" aria-hidden="true"></span>
+      <span class="carousel-control-next-icon p-3" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
   </div>
+  <!-- Carousel End -->
 </div>
 
-<!-- Scripts -->
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   function toggleSidebar() {
-    const sidebar = document.querySelector('.sidebar');
-    const mainContent = document.querySelector('.main-content');
-    sidebar.classList.toggle('d-none');
-    mainContent.classList.toggle('w-100');
+    const sidebar = document.getElementById('sidebar');
+    const main = document.getElementById('main');
+    const toggleBtn = document.getElementById('toggleBtn');
+
+    sidebar.classList.toggle('collapsed');
+    main.classList.toggle('collapsed');
   }
 </script>
 </body>
