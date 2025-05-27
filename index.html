@@ -23,11 +23,12 @@
       top: 0;
       left: 0;
       transition: all 0.3s ease;
+      overflow-y: auto;
       z-index: 1000;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      align-items: flex-start;
+      padding: 20px;
     }
 
     .sidebar.collapsed {
@@ -37,8 +38,7 @@
     }
 
     .profile-info {
-      text-align: center;
-      padding: 20px;
+      text-align: left;
       opacity: 1;
       transition: opacity 0.3s ease;
     }
@@ -70,8 +70,7 @@
       transition: left 0.3s ease;
     }
 
-    .main-content.collapsed + .toggle-btn,
-    .toggle-btn.sidebar-collapsed {
+    .main-content.collapsed + .toggle-btn {
       left: 20px;
     }
 
@@ -141,11 +140,11 @@
 <!-- Sidebar -->
 <div id="sidebar" class="sidebar">
   <div class="profile-info">
-    <h5 class="fw-bold">Nurin Aina Syahmina</h5>
-    <p class="mb-1">ID: BTCL22073192</p>
-    <p class="mb-1 text-center">Bachelor of Computer Science (Internet Computing)</p>
-    <p class="mb-1">📧 nurinsyahmina66@gmail.com</p>
-    <p class="mb-0">📱 018-9892 678</p>
+    <h4 class="fw-bold">Nurin Aina Syahmina</h4>
+    <p>ID: BTCL22073192</p>
+    <p>Bachelor of Computer Science (Internet Computing)</p>
+    <p>Email: nurinsyahmina66@gmail.com</p>
+    <p>Phone: 018-9892 678</p>
   </div>
 </div>
 
@@ -207,12 +206,6 @@
 
     sidebar.classList.toggle('collapsed');
     main.classList.toggle('collapsed');
-
-    if (sidebar.classList.contains('collapsed')) {
-      toggleBtn.classList.add('sidebar-collapsed');
-    } else {
-      toggleBtn.classList.remove('sidebar-collapsed');
-    }
   }
 </script>
 </body>
