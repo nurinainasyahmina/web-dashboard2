@@ -4,19 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard - Nurin Aina Syahmina</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
     body {
-      margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background-color: #fff5f8;
+      color: #000;
+      margin: 0;
     }
 
+    /* Sidebar Styles */
     .sidebar {
-      width: 250px;
-      background-color: #fce4ec;
-      color: #333;
+      width: 270px;
+      background: linear-gradient(to bottom, #ffc0cb, #d63384);
+      color: #000;
       padding: 30px 20px;
       height: 100vh;
       position: fixed;
@@ -25,7 +27,6 @@
       transition: all 0.3s ease;
       overflow-y: auto;
       z-index: 1000;
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
     }
 
     .sidebar.collapsed {
@@ -34,31 +35,16 @@
       overflow: hidden;
     }
 
-    .sidebar h2 {
-      font-size: 1.5rem;
-      font-weight: bold;
+    .sidebar h2, .sidebar p {
       color: #000;
-    }
-
-    .sidebar p {
-      color: #222;
-      font-size: 0.95rem;
+      margin-bottom: 10px;
     }
 
     .sidebar hr {
       border-color: rgba(0, 0, 0, 0.2);
     }
 
-    .main-content {
-      margin-left: 250px;
-      padding: 40px;
-      transition: margin-left 0.3s ease;
-    }
-
-    .main-content.collapsed {
-      margin-left: 0;
-    }
-
+    /* Toggle Button */
     .toggle-btn {
       position: fixed;
       top: 20px;
@@ -71,15 +57,26 @@
       z-index: 1100;
     }
 
+    /* Main Content */
+    .main-content {
+      margin-left: 270px;
+      padding: 50px 30px;
+      transition: margin-left 0.3s ease;
+    }
+
+    .main-content.collapsed {
+      margin-left: 0;
+    }
+
     .dashboard-title {
-      font-size: 2rem;
+      font-size: 2.2rem;
+      font-weight: bold;
       color: #d63384;
-      font-weight: 600;
     }
 
     .card {
       border: none;
-      border-radius: 30px;
+      border-radius: 25px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
       background-color: #fff0f5;
       transition: all 0.3s ease;
@@ -92,9 +89,9 @@
     .dashboard-icon {
       width: 70px;
       height: 70px;
-      background-color: #f8b6c2;
+      background-color: #d63384;
       color: white;
-      font-size: 32px;
+      font-size: 30px;
       border-radius: 50%;
       display: flex;
       justify-content: center;
@@ -127,7 +124,7 @@
       }
 
       .sidebar {
-        width: 200px;
+        width: 220px;
       }
     }
   </style>
@@ -137,7 +134,7 @@
 <!-- Sidebar -->
 <div id="sidebar" class="sidebar">
   <h2>Nurin Aina Syahmina</h2>
-  <p>BTCL22073192</p>
+  <p>ID: BTCL22073192</p>
   <hr>
 
   <p><strong>Programme:</strong><br>Bachelor of Computer Science (Internet Computing)</p>
@@ -145,7 +142,7 @@
   <p><strong>Phone:</strong><br>018-9892 678</p>
 </div>
 
-<!-- Toggle Sidebar Button -->
+<!-- Toggle Button -->
 <button class="toggle-btn" onclick="toggleSidebar()">
   <i class="fas fa-bars"></i>
 </button>
@@ -155,13 +152,13 @@
   <h1 class="dashboard-title mb-3">Dashboard Project</h1>
   <p class="mb-5">Welcome to my Dashboard Project 💖 — featuring real-time data dashboards with API integration, CI/CD, and interactive charts.</p>
 
-  <!-- Carousel Start -->
+  <!-- Carousel -->
   <div id="dashboardCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
 
-      <!-- Weather Dashboard -->
+      <!-- Weather -->
       <div class="carousel-item active">
-        <div class="card p-4 text-center mx-auto" style="max-width: 600px;">
+        <div class="card p-4 mx-auto text-center" style="max-width: 600px;">
           <div class="dashboard-icon">🌤️</div>
           <h5>Weather Dashboard</h5>
           <p>Live weather monitoring for Malaysian cities with temperature, humidity, and real-time charts.</p>
@@ -169,9 +166,9 @@
         </div>
       </div>
 
-      <!-- COVID Dashboard -->
+      <!-- COVID -->
       <div class="carousel-item">
-        <div class="card p-4 text-center mx-auto" style="max-width: 600px;">
+        <div class="card p-4 mx-auto text-center" style="max-width: 600px;">
           <div class="dashboard-icon">🦠</div>
           <h5>COVID-19 Dashboard</h5>
           <p>Track the latest COVID-19 statistics and cases globally with live country-by-country charts.</p>
@@ -190,17 +187,14 @@
       <span class="visually-hidden">Next</span>
     </button>
   </div>
-  <!-- Carousel End -->
 </div>
 
-<!-- Bootstrap & Script -->
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
   function toggleSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    const main = document.getElementById('main');
-    sidebar.classList.toggle('collapsed');
-    main.classList.toggle('collapsed');
+    document.getElementById('sidebar').classList.toggle('collapsed');
+    document.getElementById('main').classList.toggle('collapsed');
   }
 </script>
 </body>
