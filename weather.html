@@ -3,189 +3,199 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Advanced Weather Dashboard</title>
+  <title>Dashboard - Nurin Aina Syahmina</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
     body {
-      background: #ffeaf4;
       font-family: 'Segoe UI', sans-serif;
+      background-color: #fff5f8;
+      color: #000;
+      margin: 0;
     }
-    .container {
-      padding: 40px 20px;
+
+    /* Sidebar Styles */
+    .sidebar {
+      width: 270px;
+      background: linear-gradient(to bottom, #ffc0cb, #d63384);
+      color: #000;
+      padding: 30px 20px;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      transition: all 0.3s ease;
+      overflow-y: auto;
+      z-index: 1000;
     }
+
+    .sidebar.collapsed {
+      width: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .sidebar h2, .sidebar p {
+      color: #000;
+      margin-bottom: 10px;
+    }
+
+    .sidebar hr {
+      border-color: rgba(0, 0, 0, 0.2);
+    }
+
+    /* Toggle Button */
+    .toggle-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #d63384;
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      z-index: 1100;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 270px;
+      padding: 50px 30px;
+      transition: margin-left 0.3s ease;
+    }
+
+    .main-content.collapsed {
+      margin-left: 0;
+    }
+
     .dashboard-title {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: bold;
       color: #d63384;
-      text-align: center;
-      margin-bottom: 30px;
     }
+
+    .card {
+      border: none;
+      border-radius: 25px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      background-color: #fff0f5;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .dashboard-icon {
+      width: 70px;
+      height: 70px;
+      background-color: #d63384;
+      color: white;
+      font-size: 30px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 20px;
+    }
+
     .btn-outline-pink {
       color: #d63384;
       border: 2px solid #d63384;
       border-radius: 25px;
       padding: 8px 20px;
+      transition: all 0.3s ease;
     }
+
     .btn-outline-pink:hover {
       background-color: #d63384;
       color: white;
     }
-    .chart-container {
-      position: relative;
-      height: 50vh;
-      margin-top: 30px;
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      background-color: #d63384;
+      border-radius: 50%;
     }
-    #loading {
-      display: none;
+
+    @media (max-width: 768px) {
+      .main-content {
+        margin-left: 0;
+      }
+
+      .sidebar {
+        width: 220px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1 class="dashboard-title">Advanced Weather Dashboard</h1>
 
-    <!-- Input & Options -->
-    <div class="row mb-4 text-center">
-      <div class="col-md-6 mb-2">
-        <input type="text" id="cityInput" class="form-control" placeholder="Enter city (e.g. Kuala Lumpur)">
+<!-- Sidebar -->
+<div id="sidebar" class="sidebar">
+  <h2>Nurin Aina Syahmina</h2>
+  <p>ID: BTCL22073192</p>
+  <hr>
+
+  <p><strong>Programme:</strong><br>Bachelor of Computer Science (Internet Computing)</p>
+  <p class="mt-3"><strong>Email:</strong><br>nurinsyahmina66@gmail.com</p>
+  <p><strong>Phone:</strong><br>018-9892 678</p>
+</div>
+
+<!-- Toggle Button -->
+<button class="toggle-btn" onclick="toggleSidebar()">
+  <i class="fas fa-bars"></i>
+</button>
+
+<!-- Main Content -->
+<div id="main" class="main-content text-center">
+  <h1 class="dashboard-title mb-3">Dashboard Project</h1>
+  <p class="mb-5">Welcome to my Dashboard Project 💖 — featuring real-time data dashboards with API integration, CI/CD, and interactive charts.</p>
+
+  <!-- Carousel -->
+  <div id="dashboardCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+
+      <!-- Weather -->
+      <div class="carousel-item active">
+        <div class="card p-4 mx-auto text-center" style="max-width: 600px;">
+          <div class="dashboard-icon">🌤️</div>
+          <h5>Weather Dashboard</h5>
+          <p>Live weather monitoring for Malaysian cities with temperature, humidity, and real-time charts.</p>
+          <a href="weather.html" class="btn btn-outline-pink">Go to Weather</a>
+        </div>
       </div>
-      <div class="col-md-3 mb-2">
-        <select id="daySelect" class="form-select">
-          <option value="today">Today</option>
-          <option value="tomorrow">Tomorrow</option>
-          <option value="next3days">Next 3 Days</option>
-          <option value="yesterday">Yesterday</option>
-        </select>
-      </div>
-      <div class="col-md-3 mb-2">
-        <button id="getWeatherBtn" class="btn btn-outline-pink w-100">Get Weather</button>
+
+      <!-- COVID -->
+      <div class="carousel-item">
+        <div class="card p-4 mx-auto text-center" style="max-width: 600px;">
+          <div class="dashboard-icon">🦠</div>
+          <h5>COVID-19 Dashboard</h5>
+          <p>Track the latest COVID-19 statistics and cases globally with live country-by-country charts.</p>
+          <a href="covid.html" class="btn btn-outline-pink">Go to COVID-19</a>
+        </div>
       </div>
     </div>
 
-    <!-- Spinner -->
-    <div id="loading" class="text-center my-3">
-      <div class="spinner-border text-danger" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
-
-    <!-- Chart -->
-    <div class="chart-container">
-      <canvas id="weatherChart"></canvas>
-    </div>
+    <!-- Carousel Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#dashboardCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon p-3" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#dashboardCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon p-3" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
+</div>
 
-  <!-- JS Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <script>
-    const apiKey = '7b6ac545cb6419467c2b9309c38e4af2'; // Replace with your real API key from OpenWeatherMap
-    let weatherChart;
-
-    async function getCoordinates(city) {
-      const geoRes = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`);
-      const geoData = await geoRes.json();
-      if (geoData.length === 0) throw new Error("City not found");
-      return { lat: geoData[0].lat, lon: geoData[0].lon };
-    }
-
-    async function getForecast(lat, lon) {
-      const res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`);
-      if (!res.ok) throw new Error("Forecast data not found");
-      return res.json();
-    }
-
-    function showLoading(show) {
-      document.getElementById('loading').style.display = show ? 'block' : 'none';
-    }
-
-    function createChart(labels, temps) {
-      const ctx = document.getElementById('weatherChart').getContext('2d');
-      if (weatherChart) weatherChart.destroy();
-
-      weatherChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'Temperature (°C)',
-            data: temps,
-            backgroundColor: '#d63384'
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            title: {
-              display: true,
-              text: 'Weather Forecast'
-            }
-          }
-        }
-      });
-    }
-
-    document.getElementById('getWeatherBtn').addEventListener('click', async () => {
-      const city = document.getElementById('cityInput').value.trim();
-      const selectedDay = document.getElementById('daySelect').value;
-      if (!city) return alert("Please enter a city.");
-
-      showLoading(true);
-      try {
-        const { lat, lon } = await getCoordinates(city);
-        const forecastData = await getForecast(lat, lon);
-        const forecastList = forecastData.list;
-
-        const now = new Date();
-        let labels = [], temps = [];
-
-        if (selectedDay === 'today') {
-          forecastList.forEach(item => {
-            const date = new Date(item.dt_txt);
-            if (date.toDateString() === now.toDateString()) {
-              labels.push(date.getHours() + ':00');
-              temps.push((item.main.temp - 273.15).toFixed(2));
-            }
-          });
-        } else if (selectedDay === 'tomorrow') {
-          const tomorrow = new Date(now);
-          tomorrow.setDate(now.getDate() + 1);
-          forecastList.forEach(item => {
-            const date = new Date(item.dt_txt);
-            if (date.toDateString() === tomorrow.toDateString()) {
-              labels.push(date.getHours() + ':00');
-              temps.push((item.main.temp - 273.15).toFixed(2));
-            }
-          });
-        } else if (selectedDay === 'next3days') {
-          const next3 = [];
-          for (let i = 1; i <= 3; i++) {
-            const future = new Date(now);
-            future.setDate(now.getDate() + i);
-            next3.push(future.toDateString());
-          }
-          forecastList.forEach(item => {
-            const date = new Date(item.dt_txt);
-            if (next3.includes(date.toDateString()) && date.getHours() === 12) {
-              labels.push(date.toDateString());
-              temps.push((item.main.temp - 273.15).toFixed(2));
-            }
-          });
-        } else if (selectedDay === 'yesterday') {
-          // Simulated temperature data
-          labels = ['Yesterday'];
-          temps = [(Math.random() * 5 + 27).toFixed(2)];
-        }
-
-        if (labels.length === 0) throw new Error("No data available for selection.");
-        createChart(labels, temps);
-      } catch (error) {
-        alert("Error: " + error.message);
-      } finally {
-        showLoading(false);
-      }
-    });
-  </script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('collapsed');
+    document.getElementById('main').classList.toggle('collapsed');
+  }
+</script>
 </body>
 </html>
