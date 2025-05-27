@@ -3,16 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Weather Forecast Dashboard</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <title>Advanced Weather Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <style>
     body {
       background: #ffeaf4;
       font-family: 'Segoe UI', sans-serif;
-      color: #4a4a4a;
     }
     .container {
-      padding: 50px 20px;
+      padding: 40px 20px;
     }
     .dashboard-title {
       font-size: 2rem;
@@ -26,7 +25,6 @@
       border: 2px solid #d63384;
       border-radius: 25px;
       padding: 8px 20px;
-      transition: all 0.3s ease;
     }
     .btn-outline-pink:hover {
       background-color: #d63384;
@@ -35,6 +33,7 @@
     .chart-container {
       position: relative;
       height: 50vh;
+      margin-top: 30px;
     }
     #loading {
       display: none;
@@ -43,65 +42,75 @@
 </head>
 <body>
   <div class="container">
-    <h1 class="dashboard-title">Weather Forecast Dashboard</h1>
-    <div class="mb-4 text-center">
-      <input type="text" id="cityInput" class="form-control mb-2" placeholder="Enter city name (e.g. Kuala Lumpur)" />
-      <button id="getWeatherBtn" class="btn btn-outline-pink">Get Weather</button>
+    <h1 class="dashboard-title">Advanced Weather Dashboard</h1>
+
+    <!-- Input & Options -->
+    <div class="row mb-4 text-center">
+      <div class="col-md-6 mb-2">
+        <input type="text" id="cityInput" class="form-control" placeholder="Enter city (e.g. Kuala Lumpur)">
+      </div>
+      <div class="col-md-3 mb-2">
+        <select id="daySelect" class="form-select">
+          <option value="today">Today</option>
+          <option value="tomorrow">Tomorrow</option>
+          <option value="next3days">Next 3 Days</option>
+          <option value="yesterday">Yesterday</option>
+        </select>
+      </div>
+      <div class="col-md-3 mb-2">
+        <button id="getWeatherBtn" class="btn btn-outline-pink w-100">Get Weather</button>
+      </div>
     </div>
 
+    <!-- Spinner -->
     <div id="loading" class="text-center my-3">
       <div class="spinner-border text-danger" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
     </div>
 
+    <!-- Chart -->
     <div class="chart-container">
-      <canvas id="forecastChart"></canvas>
+      <canvas id="weatherChart"></canvas>
     </div>
   </div>
 
-  <!-- Libraries -->
+  <!-- JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    const apiKey = 'YOUR_API_KEY'; // <-- Gantikan dengan API key anda
-    let chart;
+    const apiKey = '7b6ac545cb6419467c2b9309c38e4af2'; // Replace with your actual API key
+    let weatherChart;
 
     async function getCoordinates(city) {
-      const geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`;
-      const response = await fetch(geoUrl);
-      const data = await response.json();
-      if (data.length === 0) throw new Error("City not found");
-      return { lat: data[0].lat, lon: data[0].lon };
+      const geoRes = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${apiKey}`);
+      const geoData = await geoRes.json();
+      if (geoData.length === 0) throw new Error("City not found");
+      return { lat: geoData[0].lat, lon: geoData[0].lon };
+    }
+
+    async function getForecast(lat, lon) {
+      const res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`);
+      if (!res.ok) throw new Error("Forecast data not found");
+      return res.json();
     }
 
     function showLoading(show) {
       document.getElementById('loading').style.display = show ? 'block' : 'none';
     }
 
-    function getDateLabel(offset) {
-      const date = new Date();
-      date.setDate(date.getDate() + offset);
-      return date.toDateString();
-    }
+    function createChart(labels, temps) {
+      const ctx = document.getElementById('weatherChart').getContext('2d');
+      if (weatherChart) weatherChart.destroy();
 
-    function plotForecastChart(forecasts) {
-      const labels = forecasts.map(item => item.label);
-      const temps = forecasts.map(item => item.temp);
-
-      const ctx = document.getElementById('forecastChart').getContext('2d');
-      if (chart) chart.destroy();
-
-      chart = new Chart(ctx, {
+      weatherChart = new Chart(ctx, {
         type: 'bar',
         data: {
-          labels,
+          labels: labels,
           datasets: [{
             label: 'Temperature (°C)',
             data: temps,
-            backgroundColor: '#f8b6c2',
-            borderColor: '#d63384',
-            borderWidth: 1
+            backgroundColor: '#d63384'
           }]
         },
         options: {
@@ -109,59 +118,71 @@
           plugins: {
             title: {
               display: true,
-              text: 'Weather Forecast (Yesterday - Next 3 Days)'
-            },
-            legend: {
-              display: false
+              text: 'Weather Forecast'
             }
           }
         }
       });
     }
 
-    async function getForecast(city) {
+    document.getElementById('getWeatherBtn').addEventListener('click', async () => {
+      const city = document.getElementById('cityInput').value.trim();
+      const selectedDay = document.getElementById('daySelect').value;
+      if (!city) return alert("Please enter a city.");
+
       showLoading(true);
       try {
         const { lat, lon } = await getCoordinates(city);
-        const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&appid=${apiKey}`);
-        if (!response.ok) throw new Error("Forecast data not found");
-        const data = await response.json();
+        const forecastData = await getForecast(lat, lon);
+        const forecastList = forecastData.list;
 
-        const forecasts = [];
+        const now = new Date();
+        let labels = [], temps = [];
 
-        // Yesterday
-        const yesterdayTimestamp = Math.floor(Date.now() / 1000) - 86400;
-        const yesterdayRes = await fetch(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${lat}&lon=${lon}&dt=${yesterdayTimestamp}&appid=${apiKey}`);
-        const yesterdayData = await yesterdayRes.json();
-        forecasts.push({
-          label: getDateLabel(-1),
-          temp: (yesterdayData.data[0].temp - 273.15).toFixed(2)
-        });
-
-        // Today + next 3 days
-        for (let i = 0; i <= 3; i++) {
-          const daily = data.daily[i];
-          forecasts.push({
-            label: getDateLabel(i),
-            temp: (daily.temp.day - 273.15).toFixed(2)
+        if (selectedDay === 'today') {
+          forecastList.forEach(item => {
+            const date = new Date(item.dt_txt);
+            if (date.toDateString() === now.toDateString()) {
+              labels.push(date.getHours() + ':00');
+              temps.push((item.main.temp - 273.15).toFixed(2));
+            }
           });
+        } else if (selectedDay === 'tomorrow') {
+          const tomorrow = new Date(now);
+          tomorrow.setDate(now.getDate() + 1);
+          forecastList.forEach(item => {
+            const date = new Date(item.dt_txt);
+            if (date.toDateString() === tomorrow.toDateString()) {
+              labels.push(date.getHours() + ':00');
+              temps.push((item.main.temp - 273.15).toFixed(2));
+            }
+          });
+        } else if (selectedDay === 'next3days') {
+          const next3 = [];
+          for (let i = 1; i <= 3; i++) {
+            const future = new Date(now);
+            future.setDate(now.getDate() + i);
+            next3.push(future.toDateString());
+          }
+          forecastList.forEach(item => {
+            const date = new Date(item.dt_txt);
+            if (next3.includes(date.toDateString()) && date.getHours() === 12) {
+              labels.push(date.toDateString());
+              temps.push((item.main.temp - 273.15).toFixed(2));
+            }
+          });
+        } else if (selectedDay === 'yesterday') {
+          labels = ['Yesterday (simulated)'];
+          temps = [(Math.random() * 10 + 25).toFixed(2)]; // Simulasi suhu
         }
 
-        plotForecastChart(forecasts);
+        if (labels.length === 0) throw new Error("No data available");
+        createChart(labels, temps);
       } catch (error) {
         alert("Error: " + error.message);
       } finally {
         showLoading(false);
       }
-    }
-
-    document.getElementById('getWeatherBtn').addEventListener('click', () => {
-      const city = document.getElementById('cityInput').value.trim();
-      if (!city) {
-        alert("Please enter a city name.");
-        return;
-      }
-      getForecast(city);
     });
   </script>
 </body>
